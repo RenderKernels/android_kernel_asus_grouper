@@ -193,6 +193,12 @@ config MSM_GPIOMUX
 config MSM_V2_TLMM
 	bool
 
+config INTELLI_PLUG
+	bool "Enable intelli-plug cpu hotplug driver"
+	default n
+	help
+	  Generic Intelli-plug cpu hotplug driver for ARM SOCs
+
 config MSM_SCM
 	bool
 endif
