@@ -28,6 +28,11 @@
 #include "board.h"
 #include "tegra3_emc.h"
 
+#ifdef CONFIG_VOLTAGE_CONTROL
+int user_mv_table[MAX_DVFS_FREQS] = {
+	800, 825, 850, 875, 900, 912, 975, 1000, 1025, 1050, 1075, 1100, 1125, 1150, 1175, 1200, 1212, 1237};
+#endif
+
 static bool tegra_dvfs_cpu_disabled;
 static bool tegra_dvfs_core_disabled;
 static struct dvfs *cpu_dvfs;
@@ -53,7 +58,7 @@ static int cpu_below_core = VDD_CPU_BELOW_VDD_CORE;
 
 static struct dvfs_rail tegra3_dvfs_rail_vdd_cpu = {
 	.reg_id = "vdd_cpu",
-	.max_millivolts = 1250,
+	.max_millivolts = 1300,
 	.min_millivolts = 800,
 	.step = VDD_SAFE_STEP,
 	.jmp_to_zero = true,
@@ -163,8 +168,11 @@ static struct dvfs cpu_dvfs_table[] = {
 	CPU_DVFS("cpu_g",  4, 0, MHZ, 460, 460, 550, 550,  680,  680,  820,  970, 1040, 1080, 1150, 1200, 1240, 1280, 1320, 1360, 1360, 1500),
 	CPU_DVFS("cpu_g",  4, 1, MHZ, 480, 480, 650, 650,  780,  780,  990, 1040, 1100, 1200, 1250, 1300, 1330, 1360, 1400, 1500),
 	CPU_DVFS("cpu_g",  4, 2, MHZ, 520, 520, 700, 700,  860,  860, 1050, 1150, 1200, 1280, 1300, 1340, 1380, 1500),
+#ifdef CONFIG_TEGRA_CPU_OVERCLOCK_ULTIMATE
+	CPU_DVFS("cpu_g",  4, 3, MHZ, 550, 550, 770, 770,  910,  910, 1150, 1230, 1280, 1330, 1370, 1400, 1470, 1500, 1500, 1550, 1550, 1600),
+#else
 	CPU_DVFS("cpu_g",  4, 3, MHZ, 550, 550, 770, 770,  910,  910, 1150, 1230, 1280, 1330, 1370, 1400, 1500),
-
+#endif
 	CPU_DVFS("cpu_g",  5, 3, MHZ, 550, 550, 770, 770,  910,  910, 1150, 1230, 1280, 1330, 1370, 1400, 1470, 1500, 1500, 1540, 1540, 1700),
 	CPU_DVFS("cpu_g",  5, 4, MHZ, 550, 550, 770, 770,  940,  940, 1160, 1240, 1280, 1360, 1390, 1470, 1500, 1520, 1520, 1590, 1700),
 
@@ -501,7 +509,7 @@ static bool __init match_dvfs_one(struct dvfs *d, int speedo_id, int process_id)
 static int __init get_cpu_nominal_mv_index(
 	int speedo_id, int process_id, struct dvfs **cpu_dvfs)
 {
-	int i, j, mv;
+	int i, j, mv, nom_index;
 	struct dvfs *d;
 	struct clk *c;
 
@@ -518,8 +526,10 @@ static int __init get_cpu_nominal_mv_index(
 	}
 	BUG_ON(i == 0);
 	mv = cpu_millivolts[i - 1];
+	pr_info("cpu_nominal_mv: %i\n", mv);
 	BUG_ON(mv < tegra3_dvfs_rail_vdd_cpu.min_millivolts);
 	mv = min(mv, tegra_cpu_speedo_mv());
+	pr_info("cpu_nominal_mv_min: %i\n", mv);
 
 	/*
 	 * Find matching cpu dvfs entry, and use it to determine index to the
@@ -549,6 +559,8 @@ static int __init get_cpu_nominal_mv_index(
 		}
 	}
 
+	pr_info("dvfs: freqs_mult: %i\n", d->freqs_mult);
+
 	BUG_ON(i == 0);
 	if (j == (ARRAY_SIZE(cpu_dvfs_table) - 1))
 		pr_err("tegra3_dvfs: WARNING!!!\n"
@@ -558,7 +570,17 @@ static int __init get_cpu_nominal_mv_index(
 		       speedo_id, process_id, d->freqs[i-1] * d->freqs_mult);
 
 	*cpu_dvfs = d;
-	return (i - 1);
+
+	nom_index = i - 1;
+	pr_info("cpu_nominal_mv_index: %i\n", nom_index);
+
+	pr_info("cpu_dvfs->speedo_id: %i\n", d->speedo_id);
+	pr_info("cpu_dvfs->process_id: %i\n", d->process_id);
+	for (i=0;i<MAX_DVFS_FREQS;i++) {
+		pr_info("cpu_dvfs->freqs: %lu\n", d->freqs[i]);
+	}
+
+	return nom_index;
 }
 
 static int __init get_core_nominal_mv_index(int speedo_id)
