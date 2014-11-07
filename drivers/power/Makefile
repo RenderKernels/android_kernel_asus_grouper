@@ -47,3 +47,6 @@ obj-$(CONFIG_CHARGER_MAX8998)	+= max8998_charger.o
 obj-$(CONFIG_MAX8907C_CHARGER)	+= max8907c-charger.o
 obj-$(CONFIG_BATTERY_BQ27541)	+= bq27541_battery.o
 obj-$(CONFIG_TEGRA_BPC_MGMT)	+= tegra_bpc_mgmt.o
+obj-$(CONFIG_BATTERY_CHARGER_GAUGE_COMM) += battery-charger-gauge-comm.o
+obj-$(CONFIG_BATTERY_CW201X)	+= cw201x_battery.o
+obj-$(CONFIG_FORCE_FAST_CHARGE) += fastcharge.o
