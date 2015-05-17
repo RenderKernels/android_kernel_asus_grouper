@@ -1,7 +1,7 @@
 VERSION = 3
 PATCHLEVEL = 1
 SUBLEVEL = 10
-EXTRAVERSION =
+EXTRAVERSION = -Plain-Kernels-Tegra3-RC1
 NAME = "Divemaster Edition"
 
 # *DOCUMENTATION*
