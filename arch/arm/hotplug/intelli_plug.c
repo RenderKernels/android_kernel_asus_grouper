@@ -151,12 +151,12 @@ module_param(nr_run_hysteresis, uint, 0644);
 
 static unsigned int nr_run_last;
 
-extern unsigned long avg_nr_running(void);
-extern unsigned long avg_cpu_nr_running(unsigned int cpu);
+/*extern unsigned long avg_nr_running(void);*/
+/*extern unsigned long avg_cpu_nr_running(unsigned int cpu);*/
 
 static unsigned int calculate_thread_stats(void)
 {
-	unsigned int avg_nr_run = avg_nr_running();
+	/*unsigned int avg_nr_run = avg_nr_running();*/
 	unsigned int nr_run;
 	unsigned int threshold_size;
 	unsigned int *current_profile;
@@ -177,7 +177,7 @@ static unsigned int calculate_thread_stats(void)
 
 		if (nr_run_last <= nr_run)
 			nr_threshold += nr_run_hysteresis;
-		if (avg_nr_run <= (nr_threshold << (FSHIFT - nr_fshift)))
+		/*if (avg_nr_run <= (nr_threshold << (FSHIFT - nr_fshift)))*/
 			break;
 	}
 	nr_run_last = nr_run;
@@ -210,7 +210,7 @@ static void update_per_cpu_stat(void)
 
 	for_each_online_cpu(cpu) {
 		l_ip_info = &per_cpu(ip_info, cpu);
-		l_ip_info->cpu_nr_running = avg_cpu_nr_running(cpu);
+		/*l_ip_info->cpu_nr_running = avg_cpu_nr_running(cpu);*/
 #ifdef DEBUG_INTELLI_PLUG
 		pr_info("cpu %u nr_running => %lu\n", cpu,
 			l_ip_info->cpu_nr_running);
