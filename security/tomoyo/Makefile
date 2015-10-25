@@ -46,3 +46,4 @@ $(obj)/builtin-policy.h: $(obj)/policy/profile.conf $(obj)/policy/exception_poli
 	@mv $@.tmp $@
 
 $(obj)/common.o: $(obj)/builtin-policy.h
+CFLAGS_KERNEL += -fstrict-aliasing

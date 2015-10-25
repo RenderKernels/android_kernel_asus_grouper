@@ -17,3 +17,4 @@ clean :
 
 install :
 	install nosy-dump $(prefix)/bin/nosy-dump
+CFLAGS_KERNEL += -fstrict-aliasing

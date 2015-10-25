@@ -4,3 +4,4 @@
 obj-$(CONFIG_EXPORTFS) += exportfs.o
 
 exportfs-objs := expfs.o
+CFLAGS_KERNEL += -fstrict-aliasing

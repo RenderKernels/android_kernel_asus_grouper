@@ -14,3 +14,4 @@ ncpfs-$(CONFIG_NCPFS_NFS_NS)   += symlink.o
 # ccflags-y := -DDEBUG_NCP=1
 
 CFLAGS_ncplib_kernel.o := -finline-functions
+CFLAGS_KERNEL += -fstrict-aliasing

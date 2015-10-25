@@ -4,3 +4,4 @@
 #
 
 obj-$(CONFIG_HPPFS) += hppfs.o
+CFLAGS_KERNEL += -fstrict-aliasing

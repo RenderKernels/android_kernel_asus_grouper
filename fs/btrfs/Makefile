@@ -10,3 +10,4 @@ btrfs-y += super.o ctree.o extent-tree.o print-tree.o root-tree.o dir-item.o \
 	   compression.o delayed-ref.o relocation.o delayed-inode.o scrub.o
 
 btrfs-$(CONFIG_BTRFS_FS_POSIX_ACL) += acl.o
+CFLAGS_KERNEL += -fstrict-aliasing

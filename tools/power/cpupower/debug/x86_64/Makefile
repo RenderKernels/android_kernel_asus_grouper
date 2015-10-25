@@ -12,3 +12,4 @@ clean:
 	rm -rf centrino-decode powernow-k8-decode
 
 .PHONY: all default clean
+CFLAGS_KERNEL += -fstrict-aliasing

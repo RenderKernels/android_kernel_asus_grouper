@@ -27,3 +27,4 @@ install:
 clean:
 	rm -f *.o
 	rm -f cpufreq-bench
+CFLAGS_KERNEL += -fstrict-aliasing

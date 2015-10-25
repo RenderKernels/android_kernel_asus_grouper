@@ -23,3 +23,4 @@ quiet_cmd_gen-kdb = GENKDB  $@
 
 $(obj)/gen-kdb_cmds.c:	$(src)/kdb_cmds $(src)/Makefile
 	$(call cmd,gen-kdb)
+CFLAGS_KERNEL += -fstrict-aliasing

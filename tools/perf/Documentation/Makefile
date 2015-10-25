@@ -301,3 +301,4 @@ $(patsubst %.txt,%.html,$(wildcard howto/*.txt)): %.html : %.txt
 #	'$(SHELL_PATH_SQ)' ./install-doc-quick.sh $(HTML_REF) $(DESTDIR)$(htmldir)
 
 .PHONY: .FORCE-PERF-VERSION-FILE
+CFLAGS_KERNEL += -fstrict-aliasing

@@ -1,6 +1,7 @@
 #
 # Makefile for the kernel block layer
 #
+CFLAGS_KERNEL += -fstrict-aliasing
 
 obj-$(CONFIG_BLOCK) := elevator.o blk-core.o blk-tag.o blk-sysfs.o \
 			blk-flush.o blk-settings.o blk-ioc.o blk-map.o \

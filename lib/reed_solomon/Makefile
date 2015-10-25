@@ -4,3 +4,4 @@
 
 obj-$(CONFIG_REED_SOLOMON) += reed_solomon.o
 
+CFLAGS_KERNEL += -fstrict-aliasing

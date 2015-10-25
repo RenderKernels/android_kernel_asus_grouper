@@ -10,3 +10,4 @@ clean:
 	${RM} *.o vhost_test/*.o vhost_test/.*.cmd \
               vhost_test/Module.symvers vhost_test/modules.order *.d
 -include *.d
+CFLAGS_KERNEL += -fstrict-aliasing

@@ -5,6 +5,8 @@
 # Rewritten to use lists instead of if-statements.
 #
 
+CFLAGS_KERNEL += -fstrict-aliasing
+
 obj-y				+= gpio/
 obj-$(CONFIG_PCI)		+= pci/
 obj-$(CONFIG_PARISC)		+= parisc/

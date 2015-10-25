@@ -5,3 +5,4 @@
 obj-y += pstore.o
 
 pstore-objs += inode.o platform.o
+CFLAGS_KERNEL += -fstrict-aliasing

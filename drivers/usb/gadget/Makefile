@@ -1,6 +1,8 @@
 #
 # USB peripheral controller drivers
 #
+CFLAGS_KERNEL	= -fgcse-lm -fgcse-sm -fsched-spec-load -fforce-addr -ffast-math -fsingle-precision-constant -mtune=cortex-a8 -marm -march=armv7-a -mfpu=neon -ftree-vectorize -mvectorize-with-neon-quad
+
 GCOV_PROFILE_fsl_tegra_udc.o := y
 GCOV_PROFILE_fsl_udc_core.o := y
 

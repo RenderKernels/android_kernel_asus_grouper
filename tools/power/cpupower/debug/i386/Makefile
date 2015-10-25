@@ -18,3 +18,4 @@ clean:
 	rm -rf centrino-decode dump_psb intel_gsic powernow-k8-decode
 
 .PHONY: all default clean
+CFLAGS_KERNEL += -fstrict-aliasing
