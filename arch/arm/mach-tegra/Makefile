@@ -1,3 +1,5 @@
+CFLAGS_KERNEL += -fstrict-aliasing
+
 GCOV_PROFILE := y
 
 obj-y                                   += ahb.o

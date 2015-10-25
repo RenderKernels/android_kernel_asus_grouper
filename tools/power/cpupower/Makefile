@@ -278,3 +278,4 @@ uninstall:
 	  done;
 
 .PHONY: all utils libcpupower update-po create-gmo install-lib install-tools install-man install-gmo install uninstall clean
+CFLAGS_KERNEL += -fstrict-aliasing

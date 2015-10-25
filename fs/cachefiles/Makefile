@@ -16,3 +16,4 @@ cachefiles-y := \
 cachefiles-$(CONFIG_CACHEFILES_HISTOGRAM) += proc.o
 
 obj-$(CONFIG_CACHEFILES) := cachefiles.o
+CFLAGS_KERNEL += -fstrict-aliasing

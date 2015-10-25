@@ -30,3 +30,4 @@ kafs-objs := \
 	write.o
 
 obj-$(CONFIG_AFS_FS)  := kafs.o
+CFLAGS_KERNEL += -fstrict-aliasing

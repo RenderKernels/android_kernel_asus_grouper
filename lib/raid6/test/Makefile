@@ -70,3 +70,4 @@ clean:
 
 spotless: clean
 	rm -f *~
+CFLAGS_KERNEL += -fstrict-aliasing

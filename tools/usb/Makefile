@@ -11,3 +11,4 @@ all: testusb ffs-test
 
 clean:
 	$(RM) testusb ffs-test
+CFLAGS_KERNEL += -fstrict-aliasing

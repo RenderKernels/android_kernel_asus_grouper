@@ -6,3 +6,4 @@ clean :
 install :
 	install turbostat /usr/bin/turbostat
 	install turbostat.8 /usr/share/man/man8
+CFLAGS_KERNEL += -fstrict-aliasing

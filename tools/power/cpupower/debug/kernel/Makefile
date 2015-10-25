@@ -21,3 +21,4 @@ install: default
 	/sbin/depmod -a
 
 all:	default
+CFLAGS_KERNEL += -fstrict-aliasing
