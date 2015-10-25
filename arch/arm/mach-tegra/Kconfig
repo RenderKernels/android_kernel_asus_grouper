@@ -271,12 +271,19 @@ config TEGRA_EMC_SCALING_ENABLE
 	depends on TEGRA_SILICON_PLATFORM
 	default n
 
+config VOLTAGE_CONTROL
+	bool "Enable user voltage control on Tegra CPU"
+	depends on TEGRA_SILICON_PLATFORM
+	default n
+	help
+	User custom voltage control interface
+
 config TEGRA_CPU_DVFS
 	bool "Enable voltage scaling on Tegra CPU"
 	depends on TEGRA_SILICON_PLATFORM
 	default y
 
-config TEGRA_CORE_DVFS
+config TEGRA_CORE_DVFSTEGRA_CPU_OVERCLOCK
 	bool "Enable voltage scaling on Tegra core"
 	depends on TEGRA_SILICON_PLATFORM
 	depends on TEGRA_CPU_DVFS
@@ -411,6 +418,56 @@ config TEGRA_CONVSERVATIVE_GOV_ON_EARLYSUPSEND
 	help
 	 Also will restore to original cpu frequency governor when device is resumed
 
+config TEGRA_LP1_950
+	bool "LP1 low core voltage"
+	default n
+	depends on ARCH_TEGRA_3x_SOC
+	help
+	  Enable support for LP1 Core voltage to set to lowest
+
+config TEGRA_RUNNABLE_THREAD
+	bool "Tegra3 runnable thread hotplug"
+	depends on ARCH_TEGRA_3x_SOC
+	default n
+	help
+	  Tegra3 Runnable Thread calculations for CPU hotplug
+
+config TEGRA3_LP_CORE_OVERDRIVE
+	bool "T3 LP Core Overdrive"
+	depends on ARCH_TEGRA_3x_SOC
+	default n
+	help
+	  Tegra3 Low Power (LP) Core Overdrive which unlocks
+	  full potential of LP core capabilities
+
+config TEGRA_GAMING_FIX
+	bool "Tegra3 Gaming Fix"
+	depends on ARCH_TEGRA_3x_SOC
+	default n
+	help
+	  Tegra3 Quadcore Gaming Fix
+
+config TEGRA_GPU_OVERCLOCK
+	bool "Tegra3 GPU Overclocking"
+	depends on ARCH_TEGRA_3x_SOC
+	default n
+	help
+	  Tegra3 Runnable Thread calculations for CPU hotplug
+
+config TEGRA_CPU_OVERCLOCK_ULTIMATE
+	bool "Tegra3 CPU Overclocking Ultimate"
+	depends on ARCH_TEGRA_3x_SOC && TEGRA_CPU_OVERCLOCK
+	default n
+	help
+	  Tegra3 CPU overclocking Ultimate edition
+
+config TEGRA_CPU_OVERCLOCK
+	bool "Tegra3 CPU Overclocking"
+	depends on ARCH_TEGRA_3x_SOC
+	default n
+	help
+	  Tegra3 CPU overclocking
+
 config TEGRA_STAT_MON
         bool "Enable H/W statistics monitor"
         depends on ARCH_TEGRA_2x_SOC
@@ -505,3 +562,11 @@ config TEGRA_PREINIT_CLOCKS
 	  Preinitialize Tegra clocks to known states before actual full-
 	  scale clock initialization starts.
 endif
+
+config RQ_STATS
+	bool "Enable Run queue statistics"
+	default n
+	help
+	  Select this to enable scheduler rune queue statistic
+	  collections
+

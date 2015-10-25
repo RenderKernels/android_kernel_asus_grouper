@@ -103,7 +103,12 @@ static struct board_info pmu_board_info;
 static struct board_info display_board_info;
 static struct board_info camera_board_info;
 
+#ifdef CONFIG_TEGRA3_LP_CORE_OVERDRIVE
+static int pmu_core_edp = 1300;	/* LP overdrive 1.3V EDP limit */
+#else
 static int pmu_core_edp = 1200;	/* default 1.2V EDP limit */
+#endif
+
 static int board_panel_type;
 static enum power_supply_type pow_supply_type = POWER_SUPPLY_TYPE_MAINS;
 
@@ -961,13 +966,20 @@ void __init tegra_ram_console_debug_reserve(unsigned long ram_console_size)
 {
 	struct resource *res;
 	long ret;
+	unsigned long real_start, real_size;
 
 	res = platform_get_resource(&ram_console_device, IORESOURCE_MEM, 0);
 	if (!res)
 		goto fail;
+
 	res->start = memblock_end_of_DRAM() - ram_console_size;
 	res->end = res->start + ram_console_size - 1;
-	ret = memblock_remove(res->start, ram_console_size);
+
+	// Register an extra 1M before ramconsole to store kexec stuff
+	real_start = res->start - SZ_1M;
+	real_size = ram_console_size + SZ_1M;
+
+	ret = memblock_remove(real_start, real_size);
 	if (ret)
 		goto fail;
 

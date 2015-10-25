@@ -209,11 +209,13 @@ static noinline int tegra_cpu_speed_balance(void)
 
 	return TEGRA_CPU_SPEED_BALANCED;
 }
+
 void disable_auto_hotplug(void)
 {
 	hp_state=TEGRA_HP_DISABLED;
 	cancel_delayed_work(&hotplug_work);
 }
+
 static void tegra_auto_hotplug_work_func(struct work_struct *work)
 {
 	bool up = false;
@@ -306,7 +308,7 @@ static int min_cpus_notify(struct notifier_block *nb, unsigned long n, void *p)
 {
 	mutex_lock(tegra3_cpu_lock);
 
-	if ((n >= 1) && is_lp_cluster()) {
+	if ((n >= 2) && is_lp_cluster()) {
 		/* make sure cpu rate is within g-mode range before switching */
 		unsigned int speed = max(
 			tegra_getspeed(0), clk_get_min_rate(cpu_g_clk) / 1000);

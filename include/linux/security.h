@@ -6,6 +6,7 @@
  * Copyright (C) 2001 Networks Associates Technology, Inc <ssmalley@nai.com>
  * Copyright (C) 2001 James Morris <jmorris@intercode.com.au>
  * Copyright (C) 2001 Silicon Graphics, Inc. (Trust Technology Group)
+ * Copyright (c) 2014 XPerience(R) Project
  *
  *	This program is free software; you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -2071,7 +2072,16 @@ static inline int security_inode_init_security(struct inode *inode,
 						initxattrs initxattrs,
 						void *fs_data)
 {
-	return -EOPNOTSUPP;
+	return 0;
+}
+
+static inline int security_new_inode_init_security(struct inode *inode,
+						struct inode *dir,
+						const struct qstr *qstr,
+						initxattrs initxattrs,
+						void *fs_data)
+{
+	return 0;
 }
 
 static inline int security_inode_create(struct inode *dir,
@@ -3072,4 +3082,3 @@ static inline void free_secdata(void *secdata)
 #endif /* CONFIG_SECURITY */
 
 #endif /* ! __LINUX_SECURITY_H */
-
